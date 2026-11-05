@@ -1,9 +1,8 @@
 export XDG_CACHE_HOME=${HOME}/.cache/
 export XDG_CONFIG_HOME=$HOME/.config/
-export XDG_CURRENT_DESKTOP=Unity
-export XDG_CURRENT_DESKTOP=river
+export XDG_CURRENT_DESKTOP=Hyprland
 export XDG_DATA_HOME=${HOME}/.local/share
-export XDG_SESSION_DESKTOP=river
+export XDG_SESSION_DESKTOP=Hyprland
 export XDG_SESSION_TYPE=wayland
 
 export GTK2_RC_FILES="${XDG_CONFIG_HOME:-$HOME/.config}/gtk-2.0/gtkrc-2.0"
@@ -50,7 +49,7 @@ esac
 [[ -d "$HOME/.local/share/gem/ruby/3.0.0/bin" ]] && PATH="$HOME/.local/share/gem/ruby/3.0.0/bin:$PATH"
 
  if [[ -z $WAYLAND_DISPLAY && $(tty) = "/dev/tty1" ]]; then
-	exec dbus-run-session river -log-level debug > /tmp/river-${timestamp}.log 2>&1
+	exec Hyprland > /tmp/hyprland-$(date +%s).log 2>&1
 fi
 
 
