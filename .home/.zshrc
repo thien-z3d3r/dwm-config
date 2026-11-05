@@ -1,7 +1,23 @@
-eval "$(fnm env --use-on-cd --shell zsh)"
-# The prompt
-export PROMPT="%F{red}%n%f:%F{cyan}%m%f"$'\n'"%F{cyan} %B%30<..<%~%b %F{red}❯❯ "
-# export PROMPT="%F{cyan} %B%30<..<%~%b %F{red}❯❯ "
+if command -v fnm &>/dev/null; then
+  eval "$(fnm env --use-on-cd --shell zsh)"
+fi
+
+# Path to your Oh My Zsh installation.
+export ZSH="$HOME/.oh-my-zsh"
+
+# Set name of the theme to load
+ZSH_THEME="robbyrussell"
+
+# Enable command auto-correction.
+ENABLE_CORRECTION="true"
+
+# Which plugins would you like to load?
+plugins=(git)
+
+source $ZSH/oh-my-zsh.sh
+
+# The prompt (uncomment below if you prefer your custom prompt over the Oh My Zsh theme)
+# export PROMPT="%F{red}%n%f:%F{cyan}%m%f"$'\n'"%F{cyan} %B%30<..<%~%b %F{red}❯❯ "
 ~/.config/scripts/colors/zwaves
 
 HISTFILE=~/.zsh/.zsh-history
@@ -89,3 +105,7 @@ source ~/.zsh/zsh-fzf-history-search/zsh-fzf-history-search.plugin.zsh
 # This section can be safely removed at any time if needed.
 [[ ! -r "$HOME/.opam/opam-init/init.zsh" ]] || source "$HOME/.opam/opam-init/init.zsh" > /dev/null 2> /dev/null
 # END opam configuration
+
+
+# Added by Antigravity CLI installer
+export PATH="/home/skadi/.local/bin:$PATH"

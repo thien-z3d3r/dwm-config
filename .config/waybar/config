@@ -1,8 +1,8 @@
 {
 	"layer": "top",
-	"modules-left": ["custom/powermenu", "river/tags", "temperature"],
+	"modules-left": ["custom/powermenu", "river/tags", "temperature", "custom/screen-off"],
 	"modules-center": ["river/window"],
-	"modules-right": ["battery","backlight", "pulseaudio", "custom/mic","custom/cpu","custom/clock", "tray"],
+	"modules-right": ["battery", "custom/battery-mode", "custom/mode-custom", "backlight", "pulseaudio", "custom/mic","custom/cpu","custom/clock", "tray"],
 	"pulseaudio": {
 		"tooltip": false,
 		"scroll-step": 5,
@@ -57,11 +57,20 @@
 		"max-length": 90
 	},
 	"backlight": {
-		"device": "amdgpu_b10",
+		"device": "nvidia_0",
 		"format": "{}% {icon}",
 		"format-icons": ["", ""],
 		"interval": 1,
 		"on-click": ""
+	},
+	"custom/mode-custom": {
+		"format": "{}",
+		"return-type": "json",
+		"interval": 2,
+		"exec": "~/.config/waybar/modules/powersave.sh status",
+		"on-click": "~/.config/waybar/modules/powersave.sh toggle",
+		"on-click-right": "~/.config/waybar/modules/powersave.sh menu",
+		"signal": 10
 	},
 	"battery": {
 		"states": {
@@ -73,6 +82,21 @@
 		"format-charging": "{icon}   {capacity}%",
 		"format-plugged": "{icon}   {capacity}%",
 		"format-icons": ["", "", "", "", ""],
+		"on-click": "~/.config/waybar/modules/battery-mode.sh menu",
+		"on-click-right": "~/.config/waybar/modules/battery-mode.sh next",
+		"on-scroll-up": "~/.config/waybar/modules/battery-mode.sh next",
+		"on-scroll-down": "~/.config/waybar/modules/battery-mode.sh prev"
+	},
+	"custom/battery-mode": {
+		"format": "{}",
+		"return-type": "json",
+		"interval": 2,
+		"exec": "~/.config/waybar/modules/battery-mode.sh status",
+		"on-click": "~/.config/waybar/modules/battery-mode.sh menu",
+		"on-click-right": "~/.config/waybar/modules/battery-mode.sh next",
+		"on-scroll-up": "~/.config/waybar/modules/battery-mode.sh next",
+		"on-scroll-down": "~/.config/waybar/modules/battery-mode.sh prev",
+		"signal": 9
 	},
 	"tray":{
 		"icon-size":18,
@@ -94,4 +118,11 @@
 		"tooltip": false,
 		"on-click": ""
 	},
+	"custom/screen-off": {
+		"format": " 󰌾 ",
+		"tooltip": true,
+		"tooltip-format": "Left click: Screen off (wake on key/mouse)\nRight click: Lock screen",
+		"on-click": "~/.config/waybar/modules/screen-off.sh",
+		"on-click-right": "~/.config/waybar/modules/screen-off.sh --lock"
+	}
 }

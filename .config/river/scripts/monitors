@@ -1,0 +1,15 @@
+#!/bin/sh
+# Configure display outputs
+# eDP-1 (laptop display) on the left (pos 0,0)
+# HDMI-A-1 (external display) on the right (pos 2560,0)
+
+if command -v wlr-randr >/dev/null 2>&1; then
+    if wlr-randr | grep -q "HDMI-A-1"; then
+        wlr-randr --output eDP-1 --pos 0,0 \
+                  --output HDMI-A-1 --pos 2560,0 --mode 1920x1080@119.997002Hz 2>/dev/null || \
+        wlr-randr --output eDP-1 --pos 0,0 \
+                  --output HDMI-A-1 --pos 2560,0
+    else
+        wlr-randr --output eDP-1 --pos 0,0
+    fi
+fi

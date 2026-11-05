@@ -6,3 +6,4 @@
 /.home/.bin/ngrok
 /.home/.bin/rr
 /.home/.bin/termusic
+__pycache__/

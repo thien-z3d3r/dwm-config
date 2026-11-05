@@ -6,6 +6,9 @@ mod="Mod4"
 mod1="Mod1"
 riverctl spawn "dbus-update-activation-environment SEATD_SOCK DISPLAY WAYLAND_DISPLAY XDG_CURRENT_DESKTOP=river"
 
+# Setup display layout (eDP left, HDMI right)
+~/.config/river/scripts/monitors
+
 # Open foot
 riverctl map normal $mod Return spawn footclient
 
@@ -145,8 +148,9 @@ do
     riverctl map $mode None XF86MonBrightnessUp   spawn 'brightnessctl set 5%+'
     riverctl map $mode None XF86MonBrightnessDown spawn 'brightnessctl set 5%-'
 
-    # Screenshot
-    riverctl map $mode None Print spawn '/home/$USER/.config/river/scripts/ss'
+    # Screenshot (PrtScr and Super+Shift+S)
+    riverctl map $mode None Print spawn "$HOME/.config/river/scripts/ss"
+    riverctl map $mode $mod+Shift S spawn "$HOME/.config/river/scripts/ss"
 done
 
 # Set background and border color
@@ -157,7 +161,7 @@ riverctl border-color-unfocused 0x4c566a
 # riverctl set-repeat 100 300
 
 riverctl focus-follows-cursor normal
-
+ 
 # Make certain views start floating
 riverctl float-filter-add app-id float
 riverctl float-filter-add title "popup title with spaces"
@@ -185,7 +189,6 @@ gtk_theme="$(grep 'gtk-theme-name' "$config" | sed 's/.*\s*=\s*//')"
 icon_theme="$(grep 'gtk-icon-theme-name' "$config" | sed 's/.*\s*=\s*//')"
 cursor_theme="$(grep 'gtk-cursor-theme-name' "$config" | sed 's/.*\s*=\s*//')"
 font_name="$(grep 'gtk-font-name' "$config" | sed 's/.*\s*=\s*//')"
-set $gnome-schema org.gnome.desktop.interface
 gsettings set "$gnome_schema" gtk-theme "Nordic"
 gsettings set "$gnome_schema" icon-theme "Numigsur"
 gsettings set "$gnome_schema" cursor-theme "$cursor_theme"

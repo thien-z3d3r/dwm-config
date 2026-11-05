@@ -52,3 +52,7 @@ esac
  if [[ -z $WAYLAND_DISPLAY && $(tty) = "/dev/tty1" ]]; then
 	exec dbus-run-session river -log-level debug > /tmp/river-${timestamp}.log 2>&1
 fi
+
+
+# Added by Antigravity CLI installer
+export PATH="/home/skadi/.local/bin:$PATH"

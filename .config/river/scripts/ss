@@ -1,10 +1,41 @@
-rofiopt="Normal\nSwappy\nQR Code"
-rofi=$(printf "$rofiopt" | rofi -dmenu -i -p "Screenshot")
-[ -z "$rofi" ] && exit
+#!/bin/sh
 
-case $rofi in
-	"Normal") wayshot -s "$(slurp -f '%x %y %w %h')" --stdout | wl-copy;;
-	"Swappy") wayshot -s "$(slurp -f '%x %y %w %h')" --stdout | swappy -f -;;
-	"QR Code") wayshot -s "$(slurp -f '%x %y %w %h')" --stdout | zbarimg -q --raw - | wl-copy;;
-	*)
-esac
+# Screenshots directory
+SAVE_DIR="$HOME/Pictures/Screenshots"
+mkdir -p "$SAVE_DIR"
+
+# Timestamped filename
+FILENAME="Screenshot_$(date +'%Y-%m-%d_%H-%M-%S').png"
+FILEPATH="$SAVE_DIR/$FILENAME"
+
+if [ "$1" = "--full" ] || [ "$1" = "-f" ]; then
+    # Full screen capture
+    if grim "$FILEPATH"; then
+        wl-copy -t image/png < "$FILEPATH"
+        notify-send -a "Snipping Tool" -i "$FILEPATH" "Screenshot Captured" "Saved to Pictures/Screenshots/$FILENAME\nCopied to clipboard"
+    fi
+    exit 0
+fi
+
+# Interactive region selection (Nord styled)
+GEOM=$(slurp -d -c '#81a1c1' -b '#2e344080' -s '#88c0d020' -w 2)
+
+# Exit cleanly if cancelled (e.g. Escape pressed)
+[ -z "$GEOM" ] && exit 0
+
+# Ignore accidental single clicks (e.g. 1x1 or 2x2)
+DIMENSIONS="${GEOM#* }"
+WIDTH="${DIMENSIONS%x*}"
+HEIGHT="${DIMENSIONS#*x}"
+if [ "$WIDTH" -le 2 ] 2>/dev/null || [ "$HEIGHT" -le 2 ] 2>/dev/null; then
+    exit 0
+fi
+
+# Capture selected region
+if grim -g "$GEOM" "$FILEPATH"; then
+    # Copy to clipboard
+    wl-copy -t image/png < "$FILEPATH"
+
+    # Send notification
+    notify-send -a "Snipping Tool" -i "$FILEPATH" "Screenshot Captured" "Saved to Pictures/Screenshots/$FILENAME\nCopied to clipboard"
+fi

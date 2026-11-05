@@ -2,7 +2,7 @@
 
 * {
 	border-radius: 0;
-	font-family: "JetbrainsMono Nerd Font";
+	font-family: "JetBrainsMono Nerd Font", "Symbols Nerd Font", "Font Awesome 7 Free", "Material Icons", monospace;
 	font-size: 19px;
 }
 
@@ -140,6 +140,51 @@ window#waybar.hidden {
 		background-color: #bf616a;
 		color: #d8dee9;
 	}
+}
+
+#custom-battery-mode {
+	margin-top: 6px;
+	margin-left: 6px;
+	border-radius: 5px;
+	transition: none;
+	padding: 10px 12px;
+	background: #2E3440;
+}
+
+#custom-battery-mode.conservation {
+	color: #88C0D0;
+}
+
+#custom-battery-mode.normal {
+	color: #A3BE8C;
+}
+
+#custom-battery-mode.rapid {
+	color: #EBCB8B;
+}
+
+#custom-mode-custom,
+#mode-custom,
+#custom-powersave {
+	margin-top: 6px;
+	margin-left: 6px;
+	border-radius: 5px;
+	transition: none;
+	padding: 10px 12px;
+	background: #2E3440;
+}
+
+#custom-mode-custom.active,
+#mode-custom.active,
+#custom-powersave.active {
+	color: #A3BE8C;
+	font-weight: bold;
+}
+
+#custom-mode-custom.inactive,
+#mode-custom.inactive,
+#custom-powersave.inactive {
+	color: #D8DEE9;
 }
 
 #backlight {
